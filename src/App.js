@@ -29,11 +29,17 @@ function renderSwitch({ on, onToggle, getTogglerProps }) {
 }
 
 class App extends PureComponent {
-  state = { on: false };
+  initialState = { on: false };
+
+  state = this.initialState;
 
   onToggle = () => {
     this.setState(({ on }) => ({ on: !on }));
     if (!this.state.on) this.myToggleButton.focus();
+  };
+
+  resetToIntialState = () => {
+    this.setState(this.initialState, () => console.log('done!'));
   };
 
   render() {
@@ -58,6 +64,9 @@ class App extends PureComponent {
           <hr />
           <MyToggleButton.ToggleMessage />
           <button onClick={test}>TEST</button>
+          <button onClick={this.resetToIntialState}>
+            Reset to Initial State
+          </button>
         </Toggle>
       </div>
     );
