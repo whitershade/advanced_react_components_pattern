@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
 import Toggle, { withToggle } from './Toggle';
 
-const MyToggle = withToggle(({ toggle: { on, onToggle } }) => (
+const MyToggle = ({ toggle: { on, onToggle } }) => (
   <button onClick={onToggle}>{on ? 'on' : 'off'}</button>
-));
+);
+const MyToggleWrapper = withToggle(MyToggle);
 
 const MyEventComponent = withToggle(({ toggle, on, event }) => {
   const props = { [event]: on };
 
   return toggle.on ? <button {...props}>The {event} event</button> : null;
 });
+MyEventComponent.displayName = 'MyEventComponent';
 
 class App extends PureComponent {
   state = { on: false };
@@ -26,7 +28,7 @@ class App extends PureComponent {
           <hr />
           <Toggle.Checkbox />
           <hr />
-          <MyToggle />
+          <MyToggleWrapper />
           <hr />
           <MyEventComponent event="onClick" on={e => alert(e.type)} />
           <hr />

@@ -3,20 +3,16 @@ import PropTypes from 'prop-types';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
-const ToggleOn = withToggle(({ children, toggle: { on } }) => {
+const ToggleOn = ({ children, toggle: { on } }) => {
   return on ? children : null;
-});
+};
 
-const ToggleOff = withToggle(({ children, toggle: { on } }) => {
+const ToggleOff = ({ children, toggle: { on } }) => {
   return !on ? children : null;
-});
+};
 
-const ToggleCheckbox = withToggle(({ toggle: { on, onToggle }, ...props }) => {
+const ToggleCheckbox = ({ toggle: { on, onToggle }, ...props }) => {
   return <input checked={on} type="checkbox" onChange={onToggle} {...props} />;
-});
-
-ToggleCheckbox.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
 };
 
 export function withToggle(Component) {
@@ -30,13 +26,17 @@ export function withToggle(Component) {
     [TOGGLE_CONTEXT]: PropTypes.object.isRequired
   };
 
+  Wrapper.displayName = `withToggle(${Component.displayName ||
+    Component.name})`;
+
   return Wrapper;
 }
 
 class Toggle extends Component {
-  static On = ToggleOn;
-  static Off = ToggleOff;
-  static Checkbox = ToggleCheckbox;
+  static On = withToggle(ToggleOn);
+  static Off = withToggle(ToggleOff);
+  static Checkbox = withToggle(ToggleCheckbox);
+
   static childContextTypes = {
     [TOGGLE_CONTEXT]: PropTypes.object.isRequired
   };
