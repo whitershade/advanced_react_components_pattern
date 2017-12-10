@@ -1,5 +1,9 @@
 import React, { PureComponent } from 'react';
-import Toggle from './Toggle';
+import Toggle, { withToggle } from './Toggle';
+
+const MyToggle = withToggle(({ on, onToggle }) => (
+  <button onClick={onToggle}>{on ? 'on' : 'off'}</button>
+));
 
 class App extends PureComponent {
   state = { on: false };
@@ -15,6 +19,7 @@ class App extends PureComponent {
             <Toggle.Off>Toggle off</Toggle.Off>
           </div>
           <Toggle.Checkbox />
+          <MyToggle />
         </Toggle>
         <button onClick={this.onToggle}>Check</button>
       </div>

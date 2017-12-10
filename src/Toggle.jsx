@@ -3,35 +3,35 @@ import PropTypes from 'prop-types';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
-function ToggleOn({ children }, context) {
-  const { on } = context[TOGGLE_CONTEXT];
-
+const ToggleOn = withToggle(({ children, on }) => {
   return on ? children : null;
-}
+});
 
-ToggleOn.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-};
-
-function ToggleOff({ children }, context) {
-  const { on } = context[TOGGLE_CONTEXT];
-
+const ToggleOff = withToggle(({ children, on }) => {
   return !on ? children : null;
-}
+});
 
-ToggleOff.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-};
-
-function ToggleCheckbox(props, context) {
-  const { on, onToggle } = context[TOGGLE_CONTEXT];
-
+const ToggleCheckbox = withToggle(({ on, onToggle, ...props }) => {
   return <input checked={on} type="checkbox" onChange={onToggle} {...props} />;
-}
+});
 
 ToggleCheckbox.contextTypes = {
   [TOGGLE_CONTEXT]: PropTypes.object.isRequired
 };
+
+export function withToggle(Component) {
+  function Wrapper(props, context) {
+    const toggleContext = context[TOGGLE_CONTEXT];
+
+    return <Component {...toggleContext} {...props} />;
+  }
+
+  Wrapper.contextTypes = {
+    [TOGGLE_CONTEXT]: PropTypes.object.isRequired
+  };
+
+  return Wrapper;
+}
 
 class Toggle extends Component {
   static On = ToggleOn;
