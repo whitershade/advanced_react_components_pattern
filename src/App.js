@@ -10,8 +10,10 @@ class App extends PureComponent {
     return (
       <div className="App">
         <Toggle on={this.state.on} onToggle={this.onToggle}>
-          <Toggle.On>Toggle on</Toggle.On>
-          <Toggle.Off>Toggle off</Toggle.Off>
+          <div>
+            <Toggle.On>Toggle on</Toggle.On>
+            <Toggle.Off>Toggle off</Toggle.Off>
+          </div>
           <Toggle.Checkbox />
         </Toggle>
         <button onClick={this.onToggle}>Check</button>
