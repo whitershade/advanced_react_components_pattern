@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
+import Switch from './Switch';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
@@ -13,7 +14,7 @@ const ToggleOff = ({ children, toggle: { on } }) => {
 };
 
 const ToggleCheckbox = ({ toggle: { on, onToggle }, ...props }) => {
-  return <input checked={on} type="checkbox" onChange={onToggle} {...props} />;
+  return <Switch on={on} onToggle={onToggle} {...props} />;
 };
 
 export function withToggle(Component) {
@@ -54,7 +55,15 @@ class Toggle extends Component {
   }
 
   render() {
-    return <div>{this.props.children}</div>;
+    return (
+      <div>
+        {this.props.children}
+        {this.props.renderSwitch({
+          on: this.props.on,
+          onToggle: this.props.onToggle
+        })}
+      </div>
+    );
   }
 }
 

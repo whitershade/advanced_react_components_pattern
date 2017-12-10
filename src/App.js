@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Toggle, { withToggle } from './Toggle';
 import MyToggleButton, { test } from './MyToggleButton';
+import Switch from './Switch';
 
 const MyEventComponent = withToggle(({ toggle, on, event }) => {
   const props = { [event]: on };
@@ -8,6 +9,16 @@ const MyEventComponent = withToggle(({ toggle, on, event }) => {
   return toggle.on ? <button {...props}>The {event} event</button> : null;
 });
 MyEventComponent.displayName = 'MyEventComponent';
+
+function renderSwitch({ on, onToggle }) {
+  return (
+    <div>
+      renderedSwitch
+      <Switch on={on} onToggle={onToggle} />
+      {on ? 'on' : 'off'}
+    </div>
+  );
+}
 
 class App extends PureComponent {
   state = { on: false };
@@ -20,7 +31,11 @@ class App extends PureComponent {
   render() {
     return (
       <div className="App">
-        <Toggle on={this.state.on} onToggle={this.onToggle}>
+        <Toggle
+          on={this.state.on}
+          onToggle={this.onToggle}
+          renderSwitch={renderSwitch}
+        >
           <hr />
           <Toggle.On>Toggle on</Toggle.On>
           <Toggle.Off>Toggle off</Toggle.Off>
