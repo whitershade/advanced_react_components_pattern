@@ -1,10 +1,6 @@
 import React, { PureComponent } from 'react';
 import Toggle, { withToggle } from './Toggle';
-
-const MyToggle = ({ toggle: { on, onToggle } }) => (
-  <button onClick={onToggle}>{on ? 'on' : 'off'}</button>
-);
-const MyToggleWrapper = withToggle(MyToggle);
+import MyToggleButton from './MyToggleButton';
 
 const MyEventComponent = withToggle(({ toggle, on, event }) => {
   const props = { [event]: on };
@@ -16,7 +12,10 @@ MyEventComponent.displayName = 'MyEventComponent';
 class App extends PureComponent {
   state = { on: false };
 
-  onToggle = () => this.setState(({ on }) => ({ on: !on }));
+  onToggle = () => {
+    this.setState(({ on }) => ({ on: !on }));
+    if (!this.state.on) this.myToggleButton.focus();
+  };
 
   render() {
     return (
@@ -28,7 +27,9 @@ class App extends PureComponent {
           <hr />
           <Toggle.Checkbox />
           <hr />
-          <MyToggleWrapper />
+          <MyToggleButton
+            innerRef={myToggleButton => (this.myToggleButton = myToggleButton)}
+          />
           <hr />
           <MyEventComponent event="onClick" on={e => alert(e.type)} />
           <hr />

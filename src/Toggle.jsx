@@ -16,10 +16,10 @@ const ToggleCheckbox = ({ toggle: { on, onToggle }, ...props }) => {
 };
 
 export function withToggle(Component) {
-  function Wrapper(props, context) {
+  function Wrapper({ innerRef, ...props }, context) {
     const toggleContext = context[TOGGLE_CONTEXT];
 
-    return <Component {...props} toggle={toggleContext} />;
+    return <Component {...props} toggle={toggleContext} ref={innerRef} />;
   }
 
   Wrapper.contextTypes = {
