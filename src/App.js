@@ -33,6 +33,7 @@ class App extends PureComponent {
           <hr />
           <MyEventComponent event="onClick" on={e => alert(e.type)} />
           <hr />
+          <MyToggleButton.ToggleMessage />
           <button onClick={test}>TEST</button>
         </Toggle>
       </div>

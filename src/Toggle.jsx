@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 const TOGGLE_CONTEXT = '__toggle__';
 
@@ -31,7 +32,7 @@ export function withToggle(Component) {
 
   Wrapper.Component = Component;
 
-  return Wrapper;
+  return hoistNonReactStatics(Wrapper, Component);
 }
 
 class Toggle extends Component {

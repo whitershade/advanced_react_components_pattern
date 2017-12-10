@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import { withToggle } from './Toggle';
 
 class MyToggleButton extends PureComponent {
+  static ToggleMessage = withToggle(
+    ({ toggle: { on } }) => (on ? 'The button is toggled on' : null)
+  );
+
   focus = () => this.button.focus();
 
   render() {
