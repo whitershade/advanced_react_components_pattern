@@ -10,12 +10,20 @@ const MyEventComponent = withToggle(({ toggle, on, event }) => {
 });
 MyEventComponent.displayName = 'MyEventComponent';
 
-function renderSwitch({ on, onToggle }) {
+function renderSwitch({ on, onToggle, getTogglerProps }) {
   return (
     <div>
       renderedSwitch
-      <Switch on={on} onToggle={onToggle} />
+      <Switch on={on} onToggle={onToggle} {...getTogglerProps()} />
       {on ? 'on' : 'off'}
+      <button {...getTogglerProps()}>Button with Toggler Props</button>
+      <button
+        {...getTogglerProps({
+          onClick: () => alert('hi')
+        })}
+      >
+        Button with changed Toggler Props
+      </button>
     </div>
   );
 }

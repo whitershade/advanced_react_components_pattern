@@ -4,6 +4,7 @@ import hoistNonReactStatics from 'hoist-non-react-statics';
 import Switch from './Switch';
 
 const TOGGLE_CONTEXT = '__toggle__';
+const compose = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args));
 
 const ToggleOn = ({ children, toggle: { on } }) => {
   return on ? children : null;
@@ -54,13 +55,22 @@ class Toggle extends Component {
     };
   }
 
+  getTogglerProps = ({ onClick, ...props } = {}) => {
+    return {
+      'aria-expanded': this.props.on,
+      onClick: compose(onClick, this.props.onToggle),
+      ...props
+    };
+  };
+
   render() {
     return (
       <div>
         {this.props.children}
         {this.props.renderSwitch({
           on: this.props.on,
-          onToggle: this.props.onToggle
+          onToggle: this.props.onToggle,
+          getTogglerProps: this.getTogglerProps
         })}
       </div>
     );
