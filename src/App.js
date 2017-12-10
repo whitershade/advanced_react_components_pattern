@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import Toggle, { withToggle } from './Toggle';
-import MyToggleButton from './MyToggleButton';
+import MyToggleButton, { test } from './MyToggleButton';
 
 const MyEventComponent = withToggle(({ toggle, on, event }) => {
   const props = { [event]: on };
@@ -33,6 +33,7 @@ class App extends PureComponent {
           <hr />
           <MyEventComponent event="onClick" on={e => alert(e.type)} />
           <hr />
+          <button onClick={test}>TEST</button>
         </Toggle>
       </div>
     );
